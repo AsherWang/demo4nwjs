@@ -20,17 +20,17 @@
     var btn = document.getElementById("button");
     var timer = null;
     var debug = false;
-    var interval = 10;
+    var interval = 1;
 
-    //¼ÇÂ¼Ê±¼ä
-    var logger_generator = function () {
+    //è®¡æ—¶ç”¨log
+    var logger_generator = function (ignoreDebug) {
         var start=new Date();
         return function(info){
-            if (debug)console.log(info +" : "+ (new Date() - start));
+            if (debug || ignoreDebug)console.log(info +" : "+ (new Date() - start));
         }
     };
-
-
+    var frameLogger=logger_generator(true);
+    frameLogger("time start");
     var getNewClock = function () {
         var logger=logger_generator();
         logger("initial time");
@@ -38,6 +38,7 @@
         logger("img_data returned to browser");
         clock_img.setAttribute("src",img_data);
         logger("img replaced");
+        frameLogger("img replaced");
     };
 
     function run(self) {
